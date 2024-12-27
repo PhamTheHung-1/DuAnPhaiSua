@@ -1,0 +1,176 @@
+.bok {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}
+img {
+  width: 192px;
+  height: 301px;
+}
+.prince {
+  color: red;
+}
+s {
+  color: gray;
+  text-decoration: line-through;
+  margin-left: 50px;
+}
+
+.banner > img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.on {
+  width: 54px;
+  font-size: 50px;
+}
+@media (max-width: 768px) {
+  .sale {
+    flex: 1 1 calc(100% - 10px); /* Chiếm 100% màn hình */
+  }
+
+  .col-md-3 {
+    flex: 1 1 calc(100% - 20px); /* Các mục dịch vụ cũng chiếm 100% */
+  }
+
+  .on {
+    font-size: 30px; /* Thu nhỏ icon trên thiết bị nhỏ */
+  }
+}
+
+@media (max-width: 576px) {
+  .h1,
+  .h2 {
+    font-size: 1.5rem; /* Thu nhỏ tiêu đề */
+  }
+
+  .prince {
+    font-size: 0.9rem; /* Thu nhỏ chữ giá */
+  }
+
+  s {
+    font-size: 0.8rem; /* Thu nhỏ giá gạch ngang */
+  }
+}
+.fa-solid fa-cart-shopping {
+  background-color: #4caf50; /* Màu nền mặc định */
+  color: white; /* Màu chữ mặc định */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.fa-solid fa-cart-shopping:hover {
+  background-color: FFC0CB;
+  color: black;
+}
+#slider {
+  overflow: hidden;
+}
+#slider figure {
+  position: relative;
+  width: 500%;
+  margin: 0;
+  left: 0;
+  animation: 20s slider infinite;
+}
+
+#slider figure img {
+  float: left;
+  width: 20%;
+  height: 10%;
+}
+@keyframes slider {
+  0% {
+    left: 0;
+  }
+  20% {
+    left: 0;
+  }
+  25% {
+    left: -100%;
+  }
+  45% {
+    left: -100%;
+  }
+  50% {
+    left: -200%;
+  }
+  70% {
+    left: -200%;
+  }
+  75% {
+    left: -300%;
+  }
+  95% {
+    left: -300%;
+  }
+  100% {
+    left: 0;
+  }
+}
+.giohangcuadung {
+  margin-left: 10px;
+  border: none;
+}
+.gioithieu {
+  padding: 50px 0;
+  background-color: #e7e4dd; /* Màu nền nhạt */
+  font-family: Arial, sans-serif;
+  background-image: url(../../public/img/background.jpg);
+}
+
+.gioithieu h2 {
+  color: #d41a76; /* Màu chữ tiêu đề */
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.gioithieu p {
+  font-size: 18px;
+  color: #333; /* Màu chữ nội dung */
+  line-height: 1.8;
+}
+
+.trangtri {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px; /* Khoảng cách giữa các phần */
+  border-radius: 30px;
+  border: #81256c solid 2px !important;
+  padding: 40px 40px;
+}
+
+.traitrangti {
+  flex: 1; /* Chia đều không gian */
+  /* Viền màu hồng đậm */
+  border-radius: 15px; /* Bo góc mềm mại */
+  padding: 20px;
+  background-color: #fff; /* Nền trắng */
+}
+
+.traitrangti p {
+  text-align: justify; /* Căn chỉnh văn bản đều */
+  color: #555; /* Màu chữ nhẹ nhàng */
+  font-family: "poppins", sans-serif;
+}
+
+.phaitrangtri {
+  flex: 1; /* Chia đều không gian */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.phaitrangtri img {
+  max-width: 100%;
+  height: auto;
+  border: none;
+}

@@ -1,0 +1,26 @@
+.list_book_cart{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.container{
+    display: flex;
+}
+/* .container:hover{
+    box-shadow: ;
+} */
+.img_cart>img{
+    margin-left: 50px;
+    width: 115px;
+    height: auto;
+}
+.content_bookcart{
+    margin-left: 250px;
+}
+.bnt_cart{
+    color: white;
+    border: none;
+    background-color: red;
+    padding: 10px 10px;
+    margin-right: 300px;
+}

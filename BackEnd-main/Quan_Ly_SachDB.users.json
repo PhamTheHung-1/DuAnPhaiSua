@@ -1,0 +1,39 @@
+[{
+  "_id": {
+    "$oid": "67250f6c6e40c3bd2bc53b5a"
+  },
+  "firstName": "Pham",
+  "lastName": "The Hiep",
+  "address": "Thon Trung-Duong Ha-Gia Lam-Ha Noi",
+  "email": "pth09021304@gmail.com",
+  "phoneNumber": "0375206870",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "673709594c13d3f0173ecafb"
+  },
+  "firstName": "Dinh",
+  "lastName": "Thanh Tam",
+  "address": "Kieu Ky-Gia Lam-Ha Noi",
+  "email": "dinhthanhtam123@gmail.com",
+  "phoneNumber": "0324765293",
+  "accountId": {
+    "$oid": "673709594c13d3f0173ecaf9"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "673781eafd696663cbede3fb"
+  },
+  "firstName": "Pham",
+  "lastName": "The Hung",
+  "address": "Nhu Hoa - Kim Son - Ninh Binh",
+  "email": "nguyenthiluong1981@gmail.com",
+  "phoneNumber": "0395784676",
+  "accountId": {
+    "$oid": "673781eafd696663cbede3f9"
+  },
+  "__v": 0
+}]

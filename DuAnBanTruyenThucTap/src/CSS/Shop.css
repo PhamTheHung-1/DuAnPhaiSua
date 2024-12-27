@@ -1,0 +1,93 @@
+.bookshop {
+  display: flex;
+  margin-left: 100px;
+}
+
+.menu {
+  width: 20%;
+  padding: 10px 0; /* Giảm padding trên và dưới */
+}
+
+.menu a {
+  display: block;
+  width: 100%;
+  margin: 0; /* Xóa margin */
+  padding: 10px; /* Padding cho nút */
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.menu a.active {
+  font-weight: bold;
+}
+
+/* Giới hạn chiều cao cho menu */
+.menu {
+  max-height: fit-content; /* Chiều cao vừa đủ nội dung */
+  box-sizing: border-box; /* Tính cả padding và border */
+}
+.content {
+  width: 80%;
+  padding: 20px;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.book-grid .sale {
+  text-align: center;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+  justify-content: center;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: red;
+  font-weight: bold;
+}
+/* khoang gia */
+.sort-menu {
+  display: block;
+  float: right;
+}
+.price-menu {
+  display: flex;
+  flex-direction: column;
+}
+
+/* sap xep */
+.sort-menu select {
+  padding: 10px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sort-menu select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.sort-menu select option {
+  padding: 10px;
+}
+.toggle-button {
+  color: white;
+}

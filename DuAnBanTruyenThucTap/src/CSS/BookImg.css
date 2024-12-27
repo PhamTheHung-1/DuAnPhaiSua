@@ -1,0 +1,8 @@
+.book-image {
+    width: 100%;        /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của container */
+    max-width: 200px;   /* Giới hạn chiều rộng tối đa */
+    height: auto;       /* Giữ tỷ lệ chiều cao tự nhiên */
+    margin-bottom: 10px;
+    display: block;     /* Hiển thị ảnh như một block */
+    border-radius: 8px; /* Nếu bạn muốn bo góc ảnh */
+  }

@@ -1,0 +1,100 @@
+/* Tổng quát */
+footer {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+footer h6 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+footer p {
+  margin-bottom: 10px;
+}
+
+footer .me-3,
+footer .me-5 {
+  margin-right: 1rem;
+}
+
+/* Social media icon */
+footer .fab {
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+footer .fab:hover {
+  color: #007bff; /* Màu xanh khi hover */
+}
+
+/* Grid layout */
+footer .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+footer .col-md-3,
+footer .col-md-2,
+footer .col-md-4 {
+  flex: 1 1 calc(33.333% - 20px); /* Các cột chiếm 1/3 màn hình */
+  margin-bottom: 20px;
+}
+
+footer .col-md-2 {
+  flex: 1 1 calc(20% - 20px); /* Các cột nhỏ chiếm 20% */
+}
+
+/* Khoảng cách icon mạng xã hội */
+footer .d-flex a {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+/* Bản quyền */
+footer .text-center.p-4 {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-size: 13px;
+}
+
+/* Media Query cho màn hình nhỏ hơn */
+@media (max-width: 768px) {
+  footer .row {
+    flex-direction: column; /* Xếp dọc các cột */
+  }
+
+  footer .col-md-3,
+  footer .col-md-2,
+  footer .col-md-4 {
+    flex: 1 1 100%; /* Chiếm 100% chiều ngang */
+    text-align: center; /* Canh giữa nội dung */
+  }
+
+  footer .fab {
+    font-size: 16px; /* Thu nhỏ icon trên màn hình nhỏ */
+  }
+
+  footer h6 {
+    font-size: 14px; /* Thu nhỏ tiêu đề */
+  }
+
+  footer p {
+    font-size: 12px; /* Thu nhỏ nội dung văn bản */
+  }
+}
+
+@media (max-width: 576px) {
+  footer .me-5 {
+    display: none; /* Ẩn đoạn text dài trên thiết bị rất nhỏ */
+  }
+
+  footer .fab {
+    margin-right: 5px;
+    font-size: 14px; /* Icon nhỏ hơn nữa */
+  }
+
+  footer .text-center.p-4 {
+    font-size: 12px; /* Cỡ chữ nhỏ hơn */
+  }
+}

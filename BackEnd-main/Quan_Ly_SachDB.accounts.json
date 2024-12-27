@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "6727b09c44690c2bf58fe00d"
+  },
+  "username": "hung09022004",
+  "password": "c6eac0c143bf6be77f41da89eed07565$811c9abb2b835315b2ec282b04d70be6eed3f9123fc7ed49c90f8d8a107888e2",
+  "role": "admin",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672c571cbdacca57c05de3a1"
+  },
+  "username": "phamhiep1304",
+  "password": "11a15e35aac13a2fafafeaf9815f0f9b$ff5d85e15e03151a4f72afcc52e88b7001af6680deaddd7b7885e1459ade63f8",
+  "role": "admin",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672c5865f83ca205c26b1c74"
+  },
+  "username": "hiep1304",
+  "password": "64360844ce85c9aff6d9c113ef47914f$1250d87b88cf151d8ce66efdf7f48c9ec01f189d1e85e7308b1c3570e1a1f11d",
+  "role": "user",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "673709594c13d3f0173ecaf9"
+  },
+  "username": "tam123",
+  "password": "10217900681c42052466ec74d0b9eccd$66539e74e1a8674ce09d3a5bb823ad06059fc3c712c95cafc07e001c3bbbd78a",
+  "role": "admin",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "673781eafd696663cbede3f9"
+  },
+  "username": "hung123",
+  "password": "4f2e1f5c302b0c4ab3c30d8da998f9ac$07d555accaf97308f79c962f20784a55502872156c49d3571cdcc25333a99d66",
+  "role": "user",
+  "__v": 0
+}]
