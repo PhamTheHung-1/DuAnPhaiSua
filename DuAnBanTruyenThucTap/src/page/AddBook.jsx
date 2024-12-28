@@ -1,118 +1,135 @@
-import React, { useState } from 'react';
-import { addNewBook } from '../JS/bookServices.js';
+import React, { useState } from "react";
+import axios from "axios";
 
 const AddBookForm = () => {
-  const [book, setBook] = useState({
-    title: '',
-    description: '',
-    genre: '',
-    author: '',
-    price: '',
-    page: '',
-    code: '',
+  const [formData, setFormData] = useState({
+    image: null, // Thêm image vào formData để lưu trữ ảnh
+    title: "",
+    description: "",
+    genre: "",
+    author: "",
+    price: "",
+    page: "",
+    code: "",
   });
-  const [file, setFile] = useState(null);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
 
-  const handleInputChange = (e) => {
+  const [preview, setPreview] = useState(null); // Thêm trạng thái preview để hiển thị ảnh xem trước
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setBook((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setFormData((prev) => ({
+      ...prev,
+      image: file, // Lưu ảnh vào formData
+    }));
+    setPreview(URL.createObjectURL(file)); // Tạo đường dẫn ảnh xem trước
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSuccess(false);
-    setIsError(false);
-    
+
+    const data = new FormData();
+    data.append("image", formData.image);
+    data.append("title", formData.title);
+    data.append("description", formData.description);
+    data.append("genre", formData.genre);
+    data.append("author", formData.author);
+    data.append("price", formData.price);
+    data.append("page", formData.page);
+    data.append("code", formData.code);
+
     try {
-      const response = await addNewBook(book, file);
-      console.log('Book added successfully:', response);
-      setIsSuccess(true);
-      // Reset the form after success
-      setBook({
-        title: '',
-        description: '',
-        genre: '',
-        author: '',
-        price: '',
-        page: '',
-        code: '',
+      const response = await axios.post("http://localhost:5000/add-book", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
-      setFile(null); // Clear the file input
+      alert("Book added successfully: " + response.data.message);
     } catch (error) {
-      console.error('Error adding book:', error);
-      setIsError(true);
+      console.error("Error adding book:", error.response.data);
+      alert("Failed to add book.");
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="title"
-        value={book.title}
-        onChange={handleInputChange}
-        placeholder="Title"
-        required
-      />
-      <input
-        type="text"
-        name="description"
-        value={book.description}
-        onChange={handleInputChange}
-        placeholder="Description"
-        required
-      />
-      <input
-        type="text"
-        name="genre"
-        value={book.genre}
-        onChange={handleInputChange}
-        placeholder="Genre"
-        required
-      />
-      <input
-        type="text"
-        name="author"
-        value={book.author}
-        onChange={handleInputChange}
-        placeholder="Author"
-        required
-      />
-      <input
-        type="number"
-        name="price"
-        value={book.price}
-        onChange={handleInputChange}
-        placeholder="Price"
-        required
-      />
-      <input
-        type="number"
-        name="page"
-        value={book.page}
-        onChange={handleInputChange}
-        placeholder="Page"
-        required
-      />
-      <input
-        type="text"
-        name="code"
-        value={book.code}
-        onChange={handleInputChange}
-        placeholder="Code"
-        required
-      />
-      <input type="file" onChange={handleFileChange} required />
-      <button type="submit">Add Book</button>
+      <div>
+        <label>Image:</label>
+        <input type="file" name="image" onChange={handleImageChange} required />
+      </div>
+      <div>
+        <label>Title:</label>
+        <input
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Description:</label>
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+        ></textarea>
+      </div>
+      <div>
+        <label>Genre:</label>
+        <input
+          type="text"
+          name="genre"
+          value={formData.genre}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Author:</label>
+        <input
+          type="text"
+          name="author"
+          value={formData.author}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Price:</label>
+        <input
+          type="number"
+          step="0.01"
+          name="price"
+          value={formData.price}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Page:</label>
+        <input
+          type="number"
+          name="page"
+          value={formData.page}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Code:</label>
+        <input
+          type="text"
+          name="code"
+          value={formData.code}
+          onChange={handleChange}
+        />
+      </div>
 
-      {isSuccess && <p>Book added successfully!</p>}
-      {isError && <p>Error adding book. Please try again.</p>}
+      {preview && <img src={preview} alt="Preview" style={{ width: "200px", marginTop: "10px" }} />}
+      <button type="submit">Add Book</button>
     </form>
   );
 };

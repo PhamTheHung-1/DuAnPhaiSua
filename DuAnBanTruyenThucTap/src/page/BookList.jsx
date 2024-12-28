@@ -38,7 +38,7 @@ const BookList = () => {
             <h2>{book.title}</h2>
             <p><strong>Author:</strong> {book.author}</p>
             <img 
-              src={`/img/${book.image}?${new Date().getTime()}`}
+              src={`/books/${book.image}?${new Date().getTime()}`}
               alt={book.title} 
               className='book-img'
             />

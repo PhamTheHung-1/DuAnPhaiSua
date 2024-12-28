@@ -14,7 +14,7 @@ const routes = [
 },
 {
         method: 'POST',
-        url: '/books',
+        url: '/add-book',
         handler: BookController.addNewBook
 },
 {

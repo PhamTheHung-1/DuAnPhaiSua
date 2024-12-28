@@ -76,7 +76,7 @@ fastify.register(require("@fastify/multipart"), {
 
 fastify.register(require("@fastify/static"), {
   root: path.join(__dirname, 'public'),  
-  prefix: "/img/",  
+  prefix: "/public/",  
 });
 
 

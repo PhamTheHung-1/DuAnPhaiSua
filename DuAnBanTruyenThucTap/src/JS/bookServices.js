@@ -15,7 +15,7 @@ export const getSingleBookById = async (id) => {
 };
 
 // Add a new book
-export const addNewBook = async (book, file) => {
+/*export const addNewBook = async (book, file) => {
   try {
     const formData = new FormData();
     formData.append('title', book.title);
@@ -42,7 +42,7 @@ export const addNewBook = async (book, file) => {
       throw error;
     }
   }
-};
+};*/
 
 // Update a book
 export const updateBook = async (id, updatedBook) => {

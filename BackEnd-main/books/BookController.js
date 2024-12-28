@@ -1,7 +1,7 @@
 const boom = require('@hapi/boom');
 const Book = require('./Book');
-const path = require("path");
 const fs = require('fs')
+const pump = require('pump')
 const {pipeline} = require('stream/promises')
 
 
@@ -32,49 +32,43 @@ async function getSingleBookById(req, rep) {
 // Add a new book
 async function addNewBook(req, rep) {
   try {
-    // Kiểm tra nếu không có file trong request
-    const file = req.body.file; // Trường file từ form
-    if (!file) {
-      throw new Error("No file uploaded");
+    const { image } = req.body;
+
+    if (!image) {
+      throw new Error("No image file uploaded");
     }
 
-    console.log("File received:", file);
+    // Image là một stream đọc, cần lưu vào đĩa
+    const imgPath = `public/img/${image.filename}`;
+    const writeStream = fs.createWriteStream(imgPath);
+    await pump(image.file, writeStream); // Lưu ảnh vào thư mục server
 
-    // Kiểm tra và tạo thư mục lưu file
-    const imgDir = path.join(__dirname, "public", "img");
-    if (!fs.existsSync(imgDir)) {
-      fs.mkdirSync(imgDir, { recursive: true });
-    }
-
-    // Tạo đường dẫn lưu file
-    const uploadPath = path.join(imgDir, file.filename);
-
-    // Sử dụng pipeline để lưu stream của file
-    await pipeline(file.file, fs.createWriteStream(uploadPath));
-
-    console.log("File saved at:", uploadPath);
-
-    // Tạo bản ghi sách mới từ các trường trong form
-    const newBook = new Book({
-      image: `/img/${file.filename}`,
-      title: req.body.title.value, 
+    const newBook = {
+      image: image.filename, 
+      title: req.body.title.value,
       description: req.body.description.value,
       genre: req.body.genre.value,
-      author: req.body.author.value,
-      price: parseFloat(req.body.price.value), // Chuyển thành số
-      page: parseInt(req.body.page.value, 10), // Chuyển thành số nguyên
+      author: req.body.author.value ,
+      price: parseFloat(req.body.price.value),
+      page: parseInt(req.body.page.value, 10),
       code: req.body.code.value,
+    };
+
+    let book = new Book(newBook);
+    await book.save(); // Lưu sách vào cơ sở dữ liệu
+    return rep.code(200).send({
+      message: "New book added successfully",
+      data: newBook,
     });
-
-    
-    // Lưu sách vào DB
-    await newBook.save();
-
-    // Trả phản hồi
-    rep.code(201).send({ message: "Book added successfully", book: newBook });
   } catch (err) {
-    console.error(err);
-    throw boom.boomify(err);
+    console.error("Error adding book:", err);
+    if (err.name === "ValidationError") {
+      return rep.code(400).send({
+        message: "Validation Error",
+        field: err.errors, // Trả về lỗi chi tiết từ Mongoose nếu có
+      });
+    }
+    return rep.code(500).send({ message: "Error adding book", error: err.message });
   }
 }
 
