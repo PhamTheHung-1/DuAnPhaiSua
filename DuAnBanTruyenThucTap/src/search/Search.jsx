@@ -1,4 +1,7 @@
 import { data, useLocation } from "react-router-dom";
+import clsx from "clsx";
+import styles from "../CSS/Search.module.css";
+
 import {
   newBooks,
   bestSellers,
@@ -44,8 +47,16 @@ function Search() {
   return (
     <div>
       {resultSearch.length > 0 ? (
-        
-        <BookList title="Kết quả tìm kiếm." books={resultSearch} />
+        resultSearch.map((book, index)=>(
+          <div className={clsx(styles.container_search)} >
+            <div key={index}>
+              <img src={`/books/${book.image}?${new Date().getTime()}`} alt="" />
+              <p className={clsx(styles.title_cart)}>{book.title}</p>
+              <p className={clsx(styles.price_cart)}>{book.price}</p>
+            </div>
+          </div>
+          
+        ))
       ) : (
         <p>{`Không tìm thấy "${data}"`}</p>
       )}

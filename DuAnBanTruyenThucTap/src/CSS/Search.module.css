@@ -1,0 +1,17 @@
+.container_search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.title_cart{
+    front-size: 25px;
+}
+img{
+    display: block;
+    margin: 0 auto;
+}
+
+.price_cart{
+    text-align: center;
+}
