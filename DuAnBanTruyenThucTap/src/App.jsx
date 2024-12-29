@@ -18,7 +18,7 @@ import Admin from "./page/Admin";
 import { AuthProvider } from "./JS/auth/auth";
 import ProtectedRoute from "./JS/auth/ProtectedRoute";
 import { useState, useEffect } from "react";
-import BookList from "./page/Book/BookList";
+import BookList from "./page/Book/BookLists";
 import AddBookForm from "./page/AddBook";
 import UpdateBookForm from "./page/UpdateBook";
 import BookDetail from "./page/Book/BookDetail";
@@ -97,6 +97,7 @@ function App() {
             }
           />
         </Routes>
+
         <Footer />
       </div>
     </AuthProvider>

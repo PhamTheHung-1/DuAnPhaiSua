@@ -68,8 +68,8 @@ const Footer = () => {
                 </p>
                 <p>
                   <i className="fas fa-home me-3"></i>{" "}
-                  <a href="https://maps.app.goo.gl/uzyUykyDZ6T8GLrx5">
-                    Số 55 Quang Trung, Nguyễn Du, Hai Bà Trưng, Hà Nội
+                  <a href="https://www.google.com/maps/dir//Ch%E1%BB%A3+Gi%C3%A0u+Ph%E1%BB%91+P.+Ch%E1%BB%A3+Gi%E1%BA%A7u+T%C3%A2n+H%E1%BB%93ng+T%E1%BB%AB+S%C6%A1n,+B%E1%BA%AFc+Ninh/@21.1216248,105.9575839,17.5z/data=!4m8!4m7!1m0!1m5!1m1!1s0x313507dcfbdec085:0xd699ee01294414dd!2m2!1d105.9612729!2d21.1163293?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D">
+                    Chợ Giàu, Phố P. Chợ Giầu, Tân Hồng, Từ Sơn, Bắc Ninh
                   </a>
                 </p>
                 <p>

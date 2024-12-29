@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllBooks } from "../../JS/bookServices";
 import { useNavigate } from "react-router-dom";
 
-const BookList = () => {
+const BookLists = () => {
   const [books, setBooks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Tất cả");
   const [selectedPriceRange, setSelectedPriceRange] = useState("Tất cả");
@@ -30,6 +30,7 @@ const BookList = () => {
     "Huyền Bí - Giả Tưởng - Kinh Dị",
     "Truyện tranh",
     "Cổ tích",
+    "Wing Books",
   ];
 
   const priceRanges = [
@@ -86,6 +87,7 @@ const BookList = () => {
         <ul style={{ listStyleType: "none", padding: 0 }}>
           {categories.map((category) => (
             <li
+              className="text-primary-emphasis"
               key={category}
               style={{
                 cursor: "pointer",
@@ -107,6 +109,7 @@ const BookList = () => {
         <ul style={{ listStyleType: "none", padding: 0 }}>
           {priceRanges.map((range) => (
             <li
+              className="text-primary-emphasis"
               key={range.label}
               style={{
                 cursor: "pointer",
@@ -200,4 +203,4 @@ const BookList = () => {
   );
 };
 
-export default BookList;
+export default BookLists;
