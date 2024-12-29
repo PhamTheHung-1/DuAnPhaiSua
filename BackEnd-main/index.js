@@ -20,6 +20,8 @@ const UserRoutes = require("./users/UserRoutes");
 const authRoutes = require("./auth/authRoutes");
 const auth = require("./auth/auth");
 const authority = require("./auth/authority");
+const Book = require("./books/Book");
+const { title } = require("node:process");
 
 // MongoDB URI
 const dbURI = "mongodb://localhost:27017/BanTruyen";
@@ -88,6 +90,18 @@ UserRoutes.forEach((route) => {
   fastify.route(route);
 }); 
 
+fastify.get('/search', async (req, rep) => {
+  const query = req.query.query.toLowerCase();
+  fastify.log.info(`Received search query: ${query}`);
+  console.log(query);
+  try{
+    const resultSearch = await Book.find({title: { $regex: query, $options: 'i' }});
+    return resultSearch;
+  }catch(error){
+    console.log(error);
+    rep.status(500).send({ error: 'Internal Server Error' });
+  }
+});
 fastify.get('/', async (req, rep) => {
   return { message: 'Hello from Fastify!' };
 });

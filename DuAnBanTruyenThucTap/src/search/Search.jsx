@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { data, useLocation } from "react-router-dom";
 import {
   newBooks,
   bestSellers,
@@ -8,6 +8,7 @@ import {
   VHNN,
   WingBook,
 } from "../JS/testbook";
+import { useState, useEffect } from "react";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -16,7 +17,6 @@ const useQuery = () => {
 function Search() {
   const query = useQuery();
   const searchState = query.get("query").toLocaleLowerCase();
-  console.log(searchState);
   const allBooks = [
     ...newBooks,
     ...bestSellers,
@@ -26,16 +26,28 @@ function Search() {
     ...VHNN,
     ...WingBook,
   ];
-  const resultSearch = allBooks.filter((book) =>
-    book.title.toLowerCase().includes(searchState)
-  );
-  console.log(resultSearch);
+  const [resultSearch, setResultSearch] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/search?query=${searchState}`);
+        const data = await response.json();
+        console.log(data);
+        setResultSearch(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [searchState]);
+
   return (
     <div>
       {resultSearch.length > 0 ? (
+        
         <BookList title="Kết quả tìm kiếm." books={resultSearch} />
       ) : (
-        <p>{`Không tìm thấy "${query}"`}</p>
+        <p>{`Không tìm thấy "${data}"`}</p>
       )}
     </div>
   );
