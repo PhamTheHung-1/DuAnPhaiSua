@@ -36,9 +36,9 @@ function Header({ lengthCart }) {
     logout();
     navigate("/");
   };
-  const handleCart = () =>{
+  const handleCart = () => {
     navigate("/cart");
-  }
+  };
   return (
     <div className="headerr">
       <div className="footer1  ">
@@ -108,7 +108,7 @@ function Header({ lengthCart }) {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link active fs-5" to="/shop">
+                  <Link className="nav-link active fs-5" to="/books">
                     Cửa Hàng
                   </Link>
                 </li>
@@ -180,10 +180,13 @@ function Header({ lengthCart }) {
               </div>
               {/* gio hang cua Anh */}
               <div className="container_add_cart">
-                <i className="fa-solid fa-bag-shopping btn_add_cart"
+                <i
+                  className="fa-solid fa-bag-shopping btn_add_cart"
                   onClick={handleCart}
                 ></i>
-                {lengthCart>0 && <span className="soluong">({lengthCart})</span>}
+                {lengthCart > 0 && (
+                  <span className="soluong">({lengthCart})</span>
+                )}
               </div>
             </div>
           </div>

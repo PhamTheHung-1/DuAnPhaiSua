@@ -46,11 +46,15 @@ const AddBookForm = () => {
     data.append("code", formData.code);
 
     try {
-      const response = await axios.post("http://localhost:5000/add-book", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:5000/add-book",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       alert("Book added successfully: " + response.data.message);
     } catch (error) {
       console.error("Error adding book:", error.response.data);
@@ -128,7 +132,13 @@ const AddBookForm = () => {
         />
       </div>
 
-      {preview && <img src={preview} alt="Preview" style={{ width: "200px", marginTop: "10px" }} />}
+      {preview && (
+        <img
+          src={preview}
+          alt="Preview"
+          style={{ width: "192px", height: "301px", marginTop: "10px" }}
+        />
+      )}
       <button type="submit">Add Book</button>
     </form>
   );

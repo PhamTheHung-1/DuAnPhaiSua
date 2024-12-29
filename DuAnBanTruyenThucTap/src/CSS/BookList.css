@@ -1,0 +1,40 @@
+.book-details {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.book-img {
+  width: 191px;
+  height: 301px;
+  transition: transform 0.3s;
+}
+.book-img:hover {
+  transform: scale(1.05);
+}
+.category-menu {
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 200px;
+  display: inline-block;
+}
+
+.category-menu li {
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.category-menu li:hover {
+  background-color: #f0f0f0;
+}
+
+.category-menu li.active {
+  font-weight: bold;
+  color: #d32f2f;
+}
+.chinhmenu {
+  margin-left: 30px;
+}

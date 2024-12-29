@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getSingleBookById, updateBook } from '../JS/bookServices.js'; // Đảm bảo đã định nghĩa getBookById trong bookServices.js
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getSingleBookById, updateBook } from "../JS/bookServices.js"; // Đảm bảo đã định nghĩa getBookById trong bookServices.js
 
 const UpdateBookForm = () => {
   const { id } = useParams();
@@ -89,5 +89,5 @@ const UpdateBookForm = () => {
     </div>
   );
 };
-  
+
 export default UpdateBookForm;

@@ -21,7 +21,7 @@ function Login({ show, onClose, onSwitchToRegister, errorMessage }) {
       //localStorage.setItem("token", token);
 
       if (role === "admin") {
-        navigate("/admin");
+        navigate("/bookadmin");
       } else {
         navigate("/");
       }

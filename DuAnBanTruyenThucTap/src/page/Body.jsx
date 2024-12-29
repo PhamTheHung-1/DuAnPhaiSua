@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { newBooks, bestSellers, Combo, Manga } from "../JS/testbook";
-function BookList({ title, books , addCart}) {
-  console.log(typeof(addCart));
+function BookList({ title, books, addCart }) {
+  console.log(typeof addCart);
   const limitedBooks = [];
   for (let i = 0; i < books.length && i < 5; i++) {
     limitedBooks.push(
@@ -24,7 +24,6 @@ function BookList({ title, books , addCart}) {
             <Link to={`/product/${book.title}`} className="sale" key={index}>
               <img src={`./public/img/${book.img}`} alt={book.title} />
               <p>{book.title}</p>
-              
               <span className="prince">{book.price}</span>{" "}
               <s>{book.originalPrice}</s>
             </Link>
@@ -42,8 +41,8 @@ function BookList({ title, books , addCart}) {
   );
 }
 
-function Body({addCart}) {
-  console.log(typeof(addCart));
+function Body({ addCart }) {
+  console.log(typeof addCart);
   return (
     <div>
       <div id="slider">
@@ -79,17 +78,17 @@ function Body({addCart}) {
           </div>
         </div>
       </div>
-      <BookList title="Sách mới" books={newBooks} addCart={addCart}/>
-      <BookList title="Sách bán chạy" books={bestSellers} addCart={addCart}/>
+      <BookList title="Sách tiếng Việt" books={newBooks} addCart={addCart} />
+      <BookList title="Sách Nhật Bản" books={bestSellers} addCart={addCart} />
       {/* quang cao */}
       <div className="banner mt-5">
         <img src="./public/img/banner.webp" className="mx-auto"></img>
       </div>
-      <BookList title="Combo" books={Combo}  addCart={addCart}/>
+      <BookList title="Combo" books={Combo} addCart={addCart} />
       <div className="banner mt-5">
         <img src="./public/img/bannermanga.webp" className="mx-auto"></img>
       </div>
-      <BookList title="Manga" books={Manga}  addCart={addCart}/>
+      <BookList title="Manga" books={Manga} addCart={addCart} />
 
       <div className="ship">
         <div className="container text-center my-5">
