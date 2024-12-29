@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { getAllBooks } from "../JS/bookServices";
 import { useNavigate } from "react-router-dom";
 
-// day na
 const Body = () => {
   const [books, setBooks] = useState([]);
   const navigate = useNavigate();
@@ -65,6 +64,7 @@ const Body = () => {
       <div className="banner mt-5">
         <img src="./public/img/banner.webp" className="mx-auto"></img>
       </div>
+      {/* hien san pham */}
       <h2 className="text-center text-danger">Một số sản phẩm</h2>
       <div
         style={{
