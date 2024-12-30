@@ -1,48 +1,28 @@
-import { Link } from "react-router-dom";
-import { newBooks, bestSellers, Combo, Manga } from "../JS/testbook";
-function BookList({ title, books, addCart }) {
-  console.log(typeof addCart);
-  const limitedBooks = [];
-  for (let i = 0; i < books.length && i < 5; i++) {
-    limitedBooks.push(
-      <a href="#" className="sale" key={i}>
-        <img src={books[i].img} alt={books[i].title} />
-        <p>{books[i].title}</p>
-        <span className="prince">{books[i].price}</span>{" "}
-        <s>{books[i].originalPrice}</s>
-      </a>
+import { getAllBooks } from "../JS/bookServices";
+import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+// day na
+const Body = () => {
+  const [books, setBooks] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    loadBooks();
+  }, []);
+
+  const loadBooks = async () => {
+    const data = await getAllBooks();
+    const allowedCategories = ["Manga - Comic", "Cổ tích", "Wing Books"];
+    const filteredBooks = data.filter((book) =>
+      allowedCategories.includes(book.genre)
     );
-  }
+    setBooks(filteredBooks);
+  };
 
-  // Trả về JSX
-  return (
-    <div className="custom">
-      <p className="h1 text-center mt-3 mb-3">{title}</p>
-      <div className="bok">
-        {books.map((book, index) => (
-          <div>
-            <Link to={`/product/${book.title}`} className="sale" key={index}>
-              <img src={`./public/img/${book.img}`} alt={book.title} />
-              <p>{book.title}</p>
-              <span className="prince">{book.price}</span>{" "}
-              <s>{book.originalPrice}</s>
-            </Link>
-            <button
-              key={index}
-              onClick={() => addCart(book)}
-              className="giohangcuadung"
-            >
-              🛒
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+  const handleDetail = (id) => {
+    navigate(`/book-detail/${id}`);
+  };
 
-function Body({ addCart }) {
-  console.log(typeof addCart);
   return (
     <div>
       {/* silder */}
@@ -83,7 +63,6 @@ function Body({ addCart }) {
       <div className="banner mt-5">
         <img src="./public/img/banner.webp" className="mx-auto"></img>
       </div>
-      {/* hien san pham */}
       <h2 className="text-center text-danger">Một số sản phẩm</h2>
       <div
         style={{
@@ -151,5 +130,4 @@ function Body({ addCart }) {
     </div>
   );
 };
-
 export default Body;
