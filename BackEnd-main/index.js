@@ -18,8 +18,6 @@ const mongoose = require("mongoose");
 const BookRoutes = require("./books/BookRoutes");
 const UserRoutes = require("./users/UserRoutes");
 const authRoutes = require("./auth/authRoutes");
-const auth = require("./auth/auth");
-const authority = require("./auth/authority");
 const Book = require("./books/Book");
 const { title } = require("node:process");
 

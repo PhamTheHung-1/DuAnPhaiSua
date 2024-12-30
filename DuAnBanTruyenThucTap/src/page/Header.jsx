@@ -1,7 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css"; // Import CSS
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Import JS (bao gồm Popper)
 import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
 import useToggleMenu from "../JS/useToggleMenu";
 import { useAuth } from "../JS/auth/auth";
 import Login from "./LoginPage";
@@ -15,7 +14,7 @@ function Header({ lengthCart }) {
   const [searchState, setSearch] = useState(""); //timkiem
   const [showCart, setShowCart] = useState(false); //gio hang
   const navigate = useNavigate();
-  const { auth, logout } = useAuth();
+  const { user, logout } = useAuth();
 
   const handleLoginClose = () => setShowLogin(false);
   const handleLoginShow = () => setShowLogin(true);
@@ -32,10 +31,14 @@ function Header({ lengthCart }) {
     navigate(`/search?query=${searchState}`);
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      await logout();  
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
+
   const handleCart = () => {
     navigate("/cart");
   };
@@ -139,10 +142,10 @@ function Header({ lengthCart }) {
               {/* dang nhap dang ky */}
 
               <div className="log nav-item d-flex ">
-                {auth ? (
+                {user ? (
                   <>
                     <a href="#" className="user-info">
-                      <i className="fa fa-user"></i> {auth.user.lastName}
+                      <i className="fa fa-user"></i>  {user.lastName}
                     </a>
                     <a href="#" className="logout-btn" onClick={handleLogout}>
                       <i className="fa fa-sign-out-alt"></i> Đăng xuất

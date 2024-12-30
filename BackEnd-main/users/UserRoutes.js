@@ -9,24 +9,24 @@ const routes = [
 
 {
         method: 'GET',
-        url: '/update-user/:id',
+        url: '/users/:id',
         handler: UserController.getUserById
 },
 
 {
         method: 'POST',
-        url: '/user',
+        url: '/adduser',
         handler: UserController.addNewUser
 },
 
 {
-        method: 'POST',
-        url: '/user/:id',
+        method: 'PUT',
+        url: '/users/:id',
         handler: UserController.updateUser
 },
 
 {
-        method: 'GET',
+        method: 'DELETE',
         url:'/users/:id',
         handler: UserController.deleteUser
 }

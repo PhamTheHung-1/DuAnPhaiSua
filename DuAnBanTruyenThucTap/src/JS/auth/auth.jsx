@@ -1,116 +1,63 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
+import React, { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { loginUser,registerUser,logoutUser } from "./authSV";
 
 const AuthContext = createContext();
 
-const adminAccount = {
-  firstName: " ",
-  lastName: "Admin",
-  email: "admin@adhk.com",
-  password: "admin123",
-  role: "admin",
-};
+const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null); // Thông tin người dùng
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-const generateToken = (payload) => {
-  const header = btoa(JSON.stringify({ alg: "HS256", typ: "JWT" }));
-  const body = btoa(JSON.stringify(payload));
-  const signature = btoa("akldjawuih45hkjdskfsefvfv"); // Mã hóa signature giả
-  return `${header}.${body}.${signature}`;
-};
-
-const getUserFromToken = (token) => {
-  try {
-    const decoded = jwtDecode(token);
-    return decoded;
-  } catch (error) {
-    console.error("Invalid token:", error.message);
-    return null;
-  }
-};
-
-export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState(() => {
+  // Kiểm tra token khi ứng dụng load
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      const user = getUserFromToken(token);
-      return user ? { token, user } : null;
+      setUser({ token });
     }
-    return null;
-  });
+    setLoading(false);
+  }, []);
 
-  useEffect(() => {
-    if (auth) {
-      localStorage.setItem("token", auth.token);
-    } else {
-      localStorage.removeItem("token");
+  // Đăng nhập
+  const login = async (credentials) => {
+    try {
+      const data = await loginUser(credentials);
+      console.log("Login response:", data);
+      setUser({ token: data.token, ...data.user });
+      return data.user; // Lưu token vào trạng thái
+    } catch (error) {
+      console.error("Login failed:", error);
     }
-  }, [auth]);
-
-  // Cập nhật login để kiểm tra tài khoản admin
-  const login = (email, password) => {
-    if (email === adminAccount.email && password === adminAccount.password) {
-      const token = generateToken({ email, role: "admin" });
-      setAuth({
-        token,
-        user: {
-          firstName: adminAccount.firstName,
-          lastName: adminAccount.lastName,
-          email,
-          role: "admin",
-        },
-      });
-      localStorage.setItem("token", token);
-      return true;
-    }
-
-    // Kiểm tra với các tài khoản người dùng thông qua localStorage
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const user = users.find(
-      (u) => u.email === email && u.password === password
-    );
-
-    if (user) {
-      const token = generateToken({
-        email: user.email,
-        role: user.role || "user",
-      });
-      setAuth({
-        token,
-        user: {
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          role: user.role || "user",
-        },
-      });
-      localStorage.setItem("token", token);
-      return true;
-    }
-
-    return false;
   };
 
-  const register = (firstName, lastName, email, password) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    if (users.some((u) => u.email === email)) {
-      return false;
+  // Đăng ký
+  const register = async (userData) => {
+    try {
+      const data = await registerUser(userData);
+      setUser({ token: data.token });
+      navigate("/")
+    } catch (error) {
+      console.error("Registration failed:", error);
     }
-
-    users.push({ firstName, lastName, email, password });
-    localStorage.setItem("users", JSON.stringify(users));
-    return login(email, password);
   };
 
-  const logout = () => {
-    setAuth(null);
-    localStorage.removeItem("token");
+  // Đăng xuất
+  const logout = async () => {
+    try {
+      await logoutUser();
+      setUser(null);
+      navigate("/")
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ auth, login, register, logout }}>
-      {children}
+    <AuthContext.Provider value={{ user, login, register, logout }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => React.useContext(AuthContext);
+export default AuthProvider;
