@@ -24,23 +24,27 @@ const BookDetail = () => {
       <h1>{book.title}</h1>
       <img src={`/books/${book.image}`} alt={book.title} />
       <p>
-        <strong>Author:</strong> {book.author}
+        Author: <strong className="text-danger">{book.author}</strong>
       </p>
       <p>
-        <strong>Genre:</strong> {book.genre}
+        Genre: <strong>{book.genre}</strong>
       </p>
       <p>
-        <strong>Description:</strong> {book.description}
+        Description:
+        <strong className="text-body-secondary">{book.description}</strong>
       </p>
       <p>
-        <strong>Page:</strong> {book.page}
+        Page: <strong>{book.page}</strong>
       </p>
       <p>
-        <strong>Code:</strong> {book.code}
+        Code: <strong className="text-danger">{book.code}</strong>
       </p>
       <p>
-        <strong>Price:</strong> {book.price}đ
+        Price: <strong>{book.price}đ</strong>
       </p>
+      <button className="text-white bg-danger text-center p-1">
+        Thêm vào giỏ hàng
+      </button>
     </div>
   );
 };
