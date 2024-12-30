@@ -54,7 +54,12 @@ async function authRoutes(fastify, opts) {
         return rep.send({ error: 'Mật khẩu hoặc Email không đúng' });
       }
 
-      const token = fastify.jwt.sign({ id: account._id, email: account.email, role: account.role });
+      const user = await User.findOne({ accountId: account._id });
+      if (!user) {
+        return rep.status(404).send({ error: 'Không tìm thấy thông tin người dùng' });
+      }
+
+      const token = fastify.jwt.sign({ id: account._id, email: account.email, role: account.role }, { expiresIn: '1d' });
       rep
         .setCookie('token', token, {
           httpOnly: true,
@@ -63,7 +68,7 @@ async function authRoutes(fastify, opts) {
         })
         .send({ 
           message: 'Đăng nhập thành công',
-          user: { role: account.role, token }
+          user: { id: account._id, firstName: user.firstName, lastName:user.lastName, role: account.role, token }
         });
     } catch (err) {
       rep.send({ error: 'Đăng nhập thất bại', details: err });

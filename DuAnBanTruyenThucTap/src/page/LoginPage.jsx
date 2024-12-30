@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useAuth } from "../JS/auth/auth"; 
+import { use } from "react";
 
 function Login({ show, onClose, onSwitchToRegister, errorMessage }) {
   const [credentials, setCredentials] = useState({
@@ -20,6 +21,7 @@ function Login({ show, onClose, onSwitchToRegister, errorMessage }) {
       console.log("User received from backend:", user);  
       if (user.role === "admin") {
         console.log("Đăng nhập thành công với role:", user.role);
+        console.log("id:", user._id);
         navigate("/bookadmin");
       } else {
         console.log("Đăng nhập thành công với role:", user.role);
