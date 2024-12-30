@@ -30,7 +30,8 @@ const BookDetail = () => {
         Genre: <strong>{book.genre}</strong>
       </p>
       <p>
-        Description:<strong>{book.description}</strong>
+        Description:
+        <strong className="text-body-secondary">{book.description}</strong>
       </p>
       <p>
         Page: <strong>{book.page}</strong>
