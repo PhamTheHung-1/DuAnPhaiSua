@@ -2,49 +2,44 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "./auth";
 import { useNavigate } from "react-router-dom";
 import Login from "../../page/LoginPage";
-import { jwtDecode } from "jwt-decode";
 
 const ProtectedRoute = ({ role, children }) => {
-  const { auth } = useAuth();
+  const { user } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!auth || !auth.token) {
+    if (!user) {
       setShowLogin(true);
-      setErrorMessage("Bạn cần đăng nhập để truy cập trang này.");
+      alert("Bạn cần đăng nhập để truy cập trang này.");
+      navigate('/');
       return;
     }
-
+    
     try {
-      const decoded = jwtDecode(auth.token);
-      console.log("Decoded token:", decoded);
-
-      if (role && decoded.role !== role) {
-        setShowLogin(true);
+      console.log("Required role:", role);
+      console.log("User role:", user?.role);
+      
+      if (role && user?.role !== role) {
         setErrorMessage("Bạn không có quyền truy cập trang này.");
+        setShowLogin(true);
         navigate("/");
       } else {
         setShowLogin(false);
       }
     } catch (error) {
-      setShowLogin(true);
+      console.error("Token decoding error:", error.message);
       setErrorMessage("Lỗi xác thực, vui lòng đăng nhập lại.");
+      setShowLogin(true);      
     }
-  }, [auth, role]);
+  }, [user, role, navigate]);
 
   if (showLogin) {
-    return (
-      <Login
-        show={showLogin}
-        onClose={() => setShowLogin(false)}
-        errorMessage={errorMessage}
-      />
-    );
+    return <Login errorMessage={errorMessage} />;
   }
 
-  return children;
+  return user && (!role || user.role === role) ? children : null;
 };
 
 export default ProtectedRoute;

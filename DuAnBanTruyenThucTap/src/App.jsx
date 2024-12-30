@@ -14,8 +14,7 @@ import "./App.css";
 import "./CSS/LoginPage.css";
 import "./CSS/RegisterPage.css";
 import "./CSS/BookList.css";
-import Admin from "./page/Admin";
-import { AuthProvider } from "./JS/auth/auth";
+import AuthProvider  from "./JS/auth/auth";
 import ProtectedRoute from "./JS/auth/ProtectedRoute";
 import { useState, useEffect } from "react";
 import BookList from "./page/Book/BookLists";
@@ -80,21 +79,11 @@ function App() {
             }
           />
           <Route path="/books" element={<BookList />} />
-          <Route path="/bookadmin" element={<BookAdmin />} />
-          <Route
-            path="/addbook"
-            onBookAdded={handleBookAdded}
-            element={<AddBookForm />}
-          />
+          <Route path="/addbook" onBookAdded={handleBookAdded} element={<AddBookForm />}/>
           <Route path="/update-book/:id" element={<UpdateBookForm />} />
-          <Route
-            path="/bookadmin"
-            element={
-              <ProtectedRoute role="admin">
-                <Admin />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/bookadmin" element={ <ProtectedRoute role="admin">
+            <BookAdmin />
+          </ProtectedRoute>}/>
         </Routes>
 
         <Footer />

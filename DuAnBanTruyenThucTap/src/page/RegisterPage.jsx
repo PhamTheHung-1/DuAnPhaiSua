@@ -1,30 +1,39 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Modal, Button, Form } from "react-bootstrap";
-import { useAuth } from "../JS/auth/auth";
+import { registerUser } from "../JS/auth/authSV";
 
 function Register({ show, onClose }) {
-  const { register } = useAuth();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [userData, setUserData] = useState({
+    email: '',
+    password: '',
+    role: 'user',  // Default role is user
+    firstName: '',
+    lastName: '',
+  });
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-
-    if (!firstName || !lastName || !email || !password) {
+  
+    if (!userData) {
       setError("Vui lòng điền hết tất cả thông tin.");
       return;
     }
-
-    // Mặc định vai trò là "user"
-    register(firstName, lastName, email, password);
-    onClose();
-    navigate("/");
+    try {
+      await registerUser(userData);
+      alert('Đăng ký thành công!');
+      onClose();
+    } catch (err) {
+      console.error("Registration error:", err.message);
+      setError("Đăng ký thất bại, vui lòng thử lại!");
+    }
   };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
   return (
     <Modal show={show} onHide={onClose} dialogClassName="custom-modal">
       <Modal.Header closeButton>
@@ -41,8 +50,9 @@ function Register({ show, onClose }) {
               <Form.Control
                 type="text"
                 placeholder="Họ"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                name="firstName"
+                value={userData.firstName}
+                onChange={handleChange}
                 className="custom-input"
                 required
               />
@@ -57,8 +67,9 @@ function Register({ show, onClose }) {
               <Form.Control
                 type="text"
                 placeholder="Tên"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                name="lastName"
+                value={userData.lastName}
+                onChange={handleChange}
                 className="custom-input"
                 required
               />
@@ -72,9 +83,10 @@ function Register({ show, onClose }) {
               </span>
               <Form.Control
                 type="email"
+                name="email"
                 placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={userData.email}
+                onChange={handleChange}
                 className="custom-input"
               />
             </div>
@@ -87,9 +99,10 @@ function Register({ show, onClose }) {
               </span>
               <Form.Control
                 type="password"
+                name="password"
                 placeholder="Mật khẩu"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={userData.password}
+                onChange={handleChange}
                 className="custom-input"
                 required
               />

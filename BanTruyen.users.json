@@ -1,0 +1,88 @@
+[{
+  "_id": {
+    "$oid": "67718899492f5a72bcc7855e"
+  },
+  "firstName": "Trần",
+  "lastName": "Văn Dũng",
+  "accountId": {
+    "$oid": "67718899492f5a72bcc7855c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6771899dc8eb2d4b413e6a78"
+  },
+  "firstName": "Admin",
+  "lastName": "User",
+  "accountId": {
+    "$oid": "6771899dc8eb2d4b413e6a76"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67718bd397b11793c75fabac"
+  },
+  "firstName": "Phạm",
+  "lastName": "Thế Hùng",
+  "accountId": {
+    "$oid": "67718bd097b11793c75faba8"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6772608618a269045754356c"
+  },
+  "firstName": "Nguyen",
+  "lastName": "Thi Luong",
+  "accountId": {
+    "$oid": "6772608618a269045754356a"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6772634618a2690457543580"
+  },
+  "firstName": "Nguyen",
+  "lastName": "Thi Luong",
+  "accountId": {
+    "$oid": "6772634618a269045754357e"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6772855b729d0b8f420d4a7b"
+  },
+  "firstName": "Trần",
+  "lastName": "Văn Dũng",
+  "accountId": {
+    "$oid": "6772855b729d0b8f420d4a79"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67728ecd729d0b8f420d4ac7"
+  },
+  "firstName": "Phạm ",
+  "lastName": "Thế Hiệp",
+  "accountId": {
+    "$oid": "67728ecd729d0b8f420d4ac5"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6772a37e729d0b8f420d4b26"
+  },
+  "firstName": "Lê ",
+  "lastName": "Đình Kiên",
+  "accountId": {
+    "$oid": "6772a37e729d0b8f420d4b24"
+  },
+  "__v": 0
+}]

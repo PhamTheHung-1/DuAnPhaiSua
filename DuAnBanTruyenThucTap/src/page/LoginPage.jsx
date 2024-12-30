@@ -1,36 +1,40 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal, Button, Form } from "react-bootstrap";
-import { useAuth } from "../JS/auth/auth";
+import { useAuth } from "../JS/auth/auth"; 
 
 function Login({ show, onClose, onSwitchToRegister, errorMessage }) {
-  const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: '',
+  });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth()
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
-
-    const isLoggedIn = login(email, password);
-    if (isLoggedIn) {
-      // Phân biệt vai trò để chuyển hướng
-      const role = email === "admin@adhk.com" ? "admin" : "user";
-
-      //localStorage.setItem("token", token);
-
-      if (role === "admin") {
+  
+    try {
+      const user = await login(credentials); 
+      console.log("User received from backend:", user);  
+      if (user.role === "admin") {
+        console.log("Đăng nhập thành công với role:", user.role);
         navigate("/bookadmin");
       } else {
+        console.log("Đăng nhập thành công với role:", user.role);
         navigate("/");
       }
-
-      console.log("Đăng nhập thành công với role:", role);
       onClose();
-    } else {
-      setError("Thông tin đăng nhập không chính xác!");
+    } catch (err) {
+      console.error("Login error:", err.message);
+      setError("Đăng nhập thất bại, vui lòng thử lại!");
     }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setCredentials({ ...credentials, [name]: value });
   };
 
   return (
@@ -51,9 +55,10 @@ function Login({ show, onClose, onSwitchToRegister, errorMessage }) {
               </span>
               <Form.Control
                 type="email"
+                name="email"
                 placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={credentials.email}
+                onChange={handleChange}
                 className="custom-input"
               />
             </div>
@@ -67,8 +72,9 @@ function Login({ show, onClose, onSwitchToRegister, errorMessage }) {
               <Form.Control
                 type="password"
                 placeholder="Mật khẩu"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                value={credentials.password}
+                onChange={handleChange}
                 className="custom-input"
               />
             </div>
