@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getSingleBookById } from "../../JS/bookServices";
+import { use } from "react";
 
 const BookDetail = () => {
   const { id } = useParams();
@@ -15,6 +16,25 @@ const BookDetail = () => {
     setBook(data);
   };
 
+  const addToCart = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/cart/${id}`, {
+        method: "POST",
+        headers: {
+          'ConTenT-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: 1,
+          productId: book._id,
+          quantity: 1,
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   if (!book) {
     return <p>Loading...</p>;
   }
@@ -42,7 +62,7 @@ const BookDetail = () => {
       <p>
         Price: <strong>{book.price}đ</strong>
       </p>
-      <button className="text-white bg-danger text-center p-1">
+      <button className="text-white bg-danger text-center p-1" onClick={addToCart}>
         Thêm vào giỏ hàng
       </button>
     </div>

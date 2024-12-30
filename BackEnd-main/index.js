@@ -22,6 +22,7 @@ const auth = require("./auth/auth");
 const authority = require("./auth/authority");
 const Book = require("./books/Book");
 const { title } = require("node:process");
+const Cart = require("./cart/moduleCart");
 
 // MongoDB URI
 const dbURI = "mongodb://localhost:27017/BanTruyen";
@@ -89,7 +90,9 @@ BookRoutes.forEach((route) => {
 UserRoutes.forEach((route) => {
   fastify.route(route);
 }); 
-
+fastify.post('/cart', async (req, rep) => {
+  const { userId, productId, quantity } = req.body;
+});
 fastify.get('/search', async (req, rep) => {
   const query = req.query.query.toLowerCase();
   fastify.log.info(`Received search query: ${query}`);
