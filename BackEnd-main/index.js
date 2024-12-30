@@ -88,8 +88,59 @@ BookRoutes.forEach((route) => {
 UserRoutes.forEach((route) => {
   fastify.route(route);
 }); 
+//Kien
+fastify.get('/cart', async (req, rep) => {
+  const { userId } = req.query;
+  try {
+    const cart = await Cart.findOne({ userId });
+    if (!cart) {
+      return rep.send({ items: [], totalPrice: 0 });
+    }
+    rep.send(cart);
+  } catch (error) {
+    console.error(error);
+    rep.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
 fastify.post('/cart', async (req, rep) => {
   const { userId, productId, quantity } = req.body;
+  console.log("productId:", productId);
+  console.log("userId:", userId);
+  try {
+    const book = await Book.findById(productId);
+    if (!book) {
+      return rep.status(404).send({ error: "Book not found" });
+    }
+    let cart = await Cart.findOne({ userId  });
+    if (!cart) {
+      cart = new Cart({
+        userId,
+        items: [],
+        totalPrice: 0,
+      });
+    }
+    const cartItem = cart.items.find((item) => item.productId.toString() === productId);  
+    if (cartItem) {
+      cartItem.quantity += quantity;
+      cartItem.price = book.price * cartItem.quantity;
+    } else {
+      cart.items.push({
+        productId,
+        title: book.title, // Thêm tiêu đề 
+        image: book.image,
+        quantity,
+        price: book.price*quantity,
+      });
+    }
+    cart.totalPrice += book.price * quantity;
+    await cart.save();
+    console.log("Cart:", cart.items);
+    rep.send(cart);
+  } catch (error) {
+    console.error(error);
+    rep.status(500).send({ error: "Internal Server Error" });
+  }
 });
 fastify.get('/search', async (req, rep) => {
   const query = req.query.query.toLowerCase();

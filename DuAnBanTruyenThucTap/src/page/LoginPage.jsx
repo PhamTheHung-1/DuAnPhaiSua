@@ -98,4 +98,5 @@ function Login({ show, onClose, onSwitchToRegister, errorMessage }) {
     </Modal>
   );
 }
+
 export default Login;

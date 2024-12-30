@@ -24,6 +24,8 @@ const AuthProvider = ({ children }) => {
       const data = await loginUser(credentials);
       console.log("Login response:", data);
       setUser({ token: data.token, ...data.user });
+      // localStorage.setItem("token", data.token); // SỬA ĐỔI: Lưu token vào localStorage
+      // localStorage.setItem("user", JSON.stringify(data.user));
       return data.user; // Lưu token vào trạng thái
     } catch (error) {
       console.error("Login failed:", error);
@@ -46,6 +48,8 @@ const AuthProvider = ({ children }) => {
     try {
       await logoutUser();
       setUser(null);
+      // localStorage.removeItem("token"); // SỬA ĐỔI: Xóa token khỏi localStorage
+      // localStorage.removeItem("user"); 
       navigate("/")
     } catch (error) {
       console.error("Logout failed:", error);

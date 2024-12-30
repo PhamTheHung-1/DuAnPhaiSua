@@ -1,43 +1,48 @@
-import React from "react";
-import clsx from "clsx";
-import { Link } from "react-router-dom";
-import styles from "../CSS/Cart.module.css";
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../JS/auth/auth';
+const Cart = () => {
+  const [cart, setCart] = useState(null);
 
-function Cart({ cartsBook, removeProductCart }) {
-  console.log(cartsBook);
+  useEffect(() => {
+    loadCart();
+  }, []);
+  const { user } = useAuth();
+  const loadCart = async () => {
+    try {
+      console.log('userID:', user.id);
+      const response = await fetch(`http://localhost:5000/cart?userId=${user._id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setCart(data);
+    } catch (error) {
+      console.error('Error loading cart:', error);
+    }
+  };
+
+  if (!cart) {
+    return <p>Loading...</p>;
+  }
+
   return (
-    <div>
-      {cartsBook.length === 0 ? (
-        <h2>Giỏ hàng trống</h2>
-      ) : (
-        cartsBook.map((book, index) => (
-          <React.Fragment>
-            <div className={styles.list_book_cart} key={index}>
-              <Link to={`/product/${book.title}`} className={styles.container}>
-                <div className={clsx(styles.img_cart)}>
-                  <img src={`/public/img/${book.img}`} alt={book.title} />
-                </div>
-                <div className={clsx(styles.content_bookcart)}>
-                  <h3>{book.title}</h3>
-                  <p>
-                    Tác giả: <b style={{ color: "red" }}>{book.TacGia}</b>
-                  </p>
-                  <p>Giá: {book.price} VND</p>
-                </div>
-              </Link>
-              <button
-                className={styles.bnt_cart}
-                onClick={() => removeProductCart(book.title)}
-              >
-                Xóa
-              </button>
-            </div>
-            <hr />
-          </React.Fragment>
-        ))
-      )}
+    <div style={{ padding: '20px' }}>
+      <h1>Giỏ hàng của bạn</h1>
+      <ul>
+        {cart.items.map((item) => (
+          <li key={item.productId}>
+            <img src={`/books/${item.image}`} alt={item.title} width="100" />
+            <h3>{item.title}</h3>
+            <p>Số lượng: {item.quantity}</p>
+            <p>Giá: {item.price}đ</p>
+          </li>
+        ))}
+      </ul>
+      <h2>Tổng giá trị: {cart.totalPrice}đ</h2>
     </div>
   );
-}
+};
 
 export default Cart;
