@@ -63,12 +63,13 @@ async function authRoutes(fastify, opts) {
       rep
         .setCookie('token', token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
+          secure: true,
           sameSite: 'Strict',
         })
         .send({ 
           message: 'Đăng nhập thành công',
-          user: { id: account._id, firstName: user.firstName, lastName:user.lastName, role: account.role, token }
+          user: { id: account._id, firstName: user.firstName, lastName:user.lastName, role: account.role },
+          token
         });
     } catch (err) {
       rep.send({ error: 'Đăng nhập thất bại', details: err });

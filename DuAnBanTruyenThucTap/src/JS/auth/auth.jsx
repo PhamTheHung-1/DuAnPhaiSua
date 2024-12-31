@@ -11,7 +11,8 @@ const AuthProvider = ({ children }) => {
 
   // Kiểm tra token khi ứng dụng load
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("user");
+    console.log(token)
     if (token) {
       setUser({ token });
     }
@@ -24,8 +25,8 @@ const AuthProvider = ({ children }) => {
       const data = await loginUser(credentials);
       console.log("Login response:", data);
       setUser({ token: data.token, ...data.user });
-      // localStorage.setItem("token", data.token); // SỬA ĐỔI: Lưu token vào localStorage
-      // localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token); 
+      localStorage.setItem("user", JSON.stringify(data.user));
       return data.user; // Lưu token vào trạng thái
     } catch (error) {
       console.error("Login failed:", error);
@@ -48,8 +49,8 @@ const AuthProvider = ({ children }) => {
     try {
       await logoutUser();
       setUser(null);
-      // localStorage.removeItem("token"); // SỬA ĐỔI: Xóa token khỏi localStorage
-      // localStorage.removeItem("user"); 
+      localStorage.removeItem("token");
+      localStorage.removeItem("user"); 
       navigate("/")
     } catch (error) {
       console.error("Logout failed:", error);
@@ -57,7 +58,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, setUser, login, register, logout }}>
       {!loading && children}
     </AuthContext.Provider>
   );
