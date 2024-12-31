@@ -88,9 +88,9 @@ BookRoutes.forEach((route) => {
 UserRoutes.forEach((route) => {
   fastify.route(route);
 }); 
+
+
 //Kien
-
-
 fastify.get('/cart', async (req, rep) => {
   const { userId } = req.query;
   if (!mongoose.Types.ObjectId.isValid(userId)) { 
@@ -130,18 +130,18 @@ fastify.post('/cart', async (req, rep) => {
     }
     const cartItem = cart.items.find((item) => item.productId.toString() === productId);  
     if (cartItem) {
-      cartItem.quantity += quantity;
+      cartItem.quantity = quantity;
       cartItem.price = book.price * cartItem.quantity;
     } else {
       cart.items.push({
         productId,
-        title: book.title, // Thêm tiêu đề 
+        title: book.title, 
         image: book.image,
         quantity,
         price: book.price * quantity,
       });
     }
-    cart.totalPrice += book.price * quantity;
+    cart.totalPrice = cart.items.reduce((total, item) => total + item.price, 0);
     await cart.save();
     console.log("Cart:", cart.items);
     rep.send(cart);
@@ -150,7 +150,25 @@ fastify.post('/cart', async (req, rep) => {
     rep.status(500).send({ error: "Internal Server Error" });
   }
 });
-
+fastify.delete('/cart', async (req, rep) => {
+  const { userId, productId } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(userId)) { 
+    return rep.status(400).send({ error: "Invalid userId" }); 
+  }
+  try {
+    const cart = await Cart.findOne({ userId: new mongoose.Types.ObjectId(userId) });
+    if (!cart) {
+      return rep.send({ items: [], totalPrice: 0 });
+    }
+    cart.items = cart.items.filter((item) => item.productId.toString() !== productId);
+    cart.totalPrice = cart.items.reduce((total, item) => total + item.price, 0);
+    await cart.save();
+    rep.send(cart);
+  } catch (error) {
+    console.error(error);
+    rep.status(500).send({ error: "Internal Server Error" });
+  }
+})
 fastify.get('/search', async (req, rep) => {
   const query = req.query.query.toLowerCase();
   fastify.log.info(`Received search query: ${query}`);
