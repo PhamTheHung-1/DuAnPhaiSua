@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser,registerUser,logoutUser } from "./authSV";
+import { loginUser, registerUser, logoutUser } from "./authSV";
 
 const AuthContext = createContext();
 
@@ -11,12 +11,10 @@ const AuthProvider = ({ children }) => {
 
   // Kiểm tra token khi ứng dụng load
   useEffect(() => {
-    const token = localStorage.getItem("user");
-    console.log(token)
-    if (token) {
-      setUser({ token });
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
-    setLoading(false);
   }, []);
 
   // Đăng nhập
@@ -25,7 +23,7 @@ const AuthProvider = ({ children }) => {
       const data = await loginUser(credentials);
       console.log("Login response:", data);
       setUser({ token: data.token, ...data.user });
-      localStorage.setItem("token", data.token); 
+      localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       return data.user; // Lưu token vào trạng thái
     } catch (error) {
@@ -38,7 +36,7 @@ const AuthProvider = ({ children }) => {
     try {
       const data = await registerUser(userData);
       setUser({ token: data.token });
-      navigate("/")
+      navigate("/");
     } catch (error) {
       console.error("Registration failed:", error);
     }
@@ -50,8 +48,8 @@ const AuthProvider = ({ children }) => {
       await logoutUser();
       setUser(null);
       localStorage.removeItem("token");
-      localStorage.removeItem("user"); 
-      navigate("/")
+      localStorage.removeItem("user");
+      navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
