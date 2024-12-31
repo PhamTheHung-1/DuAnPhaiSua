@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css"; // Import CSS
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Import JS (bao gồm Popper)
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useToggleMenu from "../JS/useToggleMenu";
 import { useAuth } from "../JS/auth/auth";
 import Login from "./LoginPage";
@@ -14,7 +14,7 @@ function Header({ lengthCart }) {
   const [searchState, setSearch] = useState(""); //timkiem
   const [showCart, setShowCart] = useState(false); //gio hang
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, setUser, logout } = useAuth();
 
   const handleLoginClose = () => setShowLogin(false);
   const handleLoginShow = () => setShowLogin(true);
@@ -25,6 +25,13 @@ function Header({ lengthCart }) {
   const toggleCart = () => {
     setShowCart(!showCart);
   };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+        setUser(JSON.parse(storedUser));
+    }
+}, []);
 
   const handleSearchSubmitForm = (event) => {
     event.preventDefault();

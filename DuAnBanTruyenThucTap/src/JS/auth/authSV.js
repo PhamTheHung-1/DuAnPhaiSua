@@ -17,8 +17,8 @@ export const loginUser = async (credentials) => {
   try {
     const response = await axios.post(`${API_URL}/login`, credentials);
     console.log("Backend response:", response.data);
-    localStorage.setItem('token', response.data.token);
-    return response.data;
+    localStorage.setItem("user", JSON.stringify(response.data.user))
+    return await response.data;
   } catch (error) {
     console.error('Lỗi đăng nhập:', error);
     throw new Error('Đăng nhập thất bại, vui lòng kiểm tra lại thông tin.');

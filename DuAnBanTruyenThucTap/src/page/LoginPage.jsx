@@ -21,7 +21,7 @@ function Login({ show, onClose, onSwitchToRegister, errorMessage }) {
       console.log("User received from backend:", user);  
       if (user.role === "admin") {
         console.log("Đăng nhập thành công với role:", user.role);
-        console.log("id:", user._id);
+        console.log("id:", user.id);
         navigate("/bookadmin");
       } else {
         console.log("Đăng nhập thành công với role:", user.role);

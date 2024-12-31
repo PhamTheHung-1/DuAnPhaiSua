@@ -67,7 +67,7 @@ async function authRoutes(fastify, opts) {
       rep
         .setCookie("token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
+          secure: true,
           sameSite: "Strict",
         })
         .send({
@@ -77,8 +77,8 @@ async function authRoutes(fastify, opts) {
             firstName: user.firstName,
             lastName: user.lastName,
             role: account.role,
-            token,
           },
+          token,
         });
     } catch (err) {
       rep.send({ error: "Đăng nhập thất bại", details: err });
