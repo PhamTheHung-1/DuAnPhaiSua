@@ -89,10 +89,15 @@ UserRoutes.forEach((route) => {
   fastify.route(route);
 }); 
 //Kien
+
+
 fastify.get('/cart', async (req, rep) => {
   const { userId } = req.query;
+  if (!mongoose.Types.ObjectId.isValid(userId)) { 
+    return rep.status(400).send({ error: "Invalid userId" }); 
+  }
   try {
-    const cart = await Cart.findOne({ userId });
+    const cart = await Cart.findOne({ userId: new mongoose.Types.ObjectId(userId) });
     if (!cart) {
       return rep.send({ items: [], totalPrice: 0 });
     }
@@ -107,15 +112,18 @@ fastify.post('/cart', async (req, rep) => {
   const { userId, productId, quantity } = req.body;
   console.log("productId:", productId);
   console.log("userId:", userId);
+  if (!mongoose.Types.ObjectId.isValid(userId)) { 
+    return rep.status(400).send({ error: "Invalid userId" }); 
+  }
   try {
     const book = await Book.findById(productId);
     if (!book) {
       return rep.status(404).send({ error: "Book not found" });
     }
-    let cart = await Cart.findOne({ userId  });
+    let cart = await Cart.findOne({ userId: new mongoose.Types.ObjectId(userId) });
     if (!cart) {
       cart = new Cart({
-        userId,
+        userId: new mongoose.Types.ObjectId(userId),
         items: [],
         totalPrice: 0,
       });
@@ -130,7 +138,7 @@ fastify.post('/cart', async (req, rep) => {
         title: book.title, // Thêm tiêu đề 
         image: book.image,
         quantity,
-        price: book.price*quantity,
+        price: book.price * quantity,
       });
     }
     cart.totalPrice += book.price * quantity;
@@ -142,6 +150,7 @@ fastify.post('/cart', async (req, rep) => {
     rep.status(500).send({ error: "Internal Server Error" });
   }
 });
+
 fastify.get('/search', async (req, rep) => {
   const query = req.query.query.toLowerCase();
   fastify.log.info(`Received search query: ${query}`);
