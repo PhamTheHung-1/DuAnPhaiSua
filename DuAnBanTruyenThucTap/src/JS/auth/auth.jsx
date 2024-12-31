@@ -19,6 +19,13 @@ const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+        setUser(JSON.parse(storedUser));
+    }
+}, []);
+
   // Đăng nhập
   const login = async (credentials) => {
     try {
